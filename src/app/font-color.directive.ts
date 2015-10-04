@@ -2,10 +2,10 @@ import { Directive, ElementRef, Attribute } from 'angular2/angular2';
 
 @Directive({
     // using [ ] means selecting an attribute
-    selector: '[set-font]'
+    selector: '[font-color]'
 })
-export class SetFont {
-    constructor(element: ElementRef, @Attribute('set-font') color: string) {
+export class FontColor {
+    constructor(element: ElementRef, @Attribute('font-color') color: string) {
         element.nativeElement.style.color = color;
     }
 }

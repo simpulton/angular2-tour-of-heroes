@@ -1,14 +1,13 @@
-import {Component, View} from 'angular2/angular2';
+import {Component, View, FORM_DIRECTIVES} from 'angular2/angular2';
 import {RouteParams, Router} from 'angular2/router';
 import {Hero} from './hero';
 import {HeroService} from './hero.service';
-import {HERO_DIRECTIVES} from './constants';
-import { Routes } from './route.config';
+import {Routes} from './route.config';
 
 @Component({selector: 'my-hero-detail'})
 @View({
   templateUrl: 'app/hero-detail.component.html',
-  directives: [HERO_DIRECTIVES]
+  directives: [FORM_DIRECTIVES]
 })
 export class HeroDetailComponent {
   hero: Hero;
@@ -21,6 +20,7 @@ export class HeroDetailComponent {
   }
 
   gotoHeroes() {
-    this._router.navigate(`${Routes.heroes.as}`);
+    //TODO: refactor to use the navigate with the tuple
+    this._router.navigateByUrl(`${Routes.heroes.as}`);
   }
 }

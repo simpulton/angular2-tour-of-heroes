@@ -7,13 +7,13 @@ import {ElementRef} from 'angular2/core';
     selector: '[draggable]'
 })
 export class Draggable {
-    startX: number = 0;
-    startY: number = 0;
-    x: number = 0;
-    y: number = 0;
+    startX:number = 0;
+    startY:number = 0;
+    x:number = 0;
+    y:number = 0;
     document = DOM.defaultDoc();
 
-    constructor(public element: ElementRef) {
+    constructor(public element:ElementRef) {
 
     }
 
@@ -22,18 +22,18 @@ export class Draggable {
         this.element.nativeElement.style.position = 'relative';
         this.element.nativeElement.style.cursor = 'move';
 
-        var mousemove;
-        var mousedown;
-        var mouseup;
+        var mousemove:Function;
+        var mousedown:Function;
+        var mouseup:Function;
 
-        mousemove = (event) => {
+        mousemove = (event:any) => {
             this.y = event.screenY - this.startY;
             this.x = event.screenX - this.startX;
-            this.element.nativeElement.style.top  = this.y + 'px';
+            this.element.nativeElement.style.top = this.y + 'px';
             this.element.nativeElement.style.left = this.x + 'px';
         };
 
-        mousedown = (event) => {
+        mousedown = (event:any) => {
             this.startX = event.screenX - this.x;
             this.startY = event.screenY - this.y;
             this.document.addEventListener('mousemove', mousemove, false);

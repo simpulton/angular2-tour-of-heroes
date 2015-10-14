@@ -1,14 +1,15 @@
-import {Component, OnInit, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
+import {Component, CORE_DIRECTIVES, FORM_DIRECTIVES, OnInit} from 'angular2/angular2';
 import {Router} from 'angular2/router';
 import {HeroService} from './hero.service';
+import {HeroDetailComponent} from './hero-detail.component';
 import {Hero} from './hero';
 import {Routes} from './route.config';
 
-@Component({ selector: 'my-heroes' })
-@View({
+@Component({
+  selector: 'my-heroes',
   templateUrl: 'app/heroes.component.html',
-  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES],
-  styleUrls: ['app/heroes.component.css']
+  styleUrls: ['app/heroes.component.css'],
+  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, HeroDetailComponent]
 })
 export class HeroesComponent implements OnInit {
   public heroes: Hero[];
@@ -16,16 +17,12 @@ export class HeroesComponent implements OnInit {
 
   constructor(private _heroService: HeroService, private _router: Router) { }
 
-  onInit() {
-    this.heroes = this.getHeroes();
-  }
-
   getHeroes() {
     this.selectedHero = undefined;
     this.heroes = [];
 
     this._heroService.getHeroes()
-      .then(heroes => this.heroes = heroes);
+      .then((heroes: Hero[]) => this.heroes = heroes);
 
     return this.heroes;
   }
@@ -34,10 +31,12 @@ export class HeroesComponent implements OnInit {
     return { 'selected': hero === this.selectedHero };
   }
 
-  goDetail() {
-    // this._router.navigateByUrl(`detail/${this.selectedHero.id}`);
+  gotoDetail() {
     this._router.navigate([`/${Routes.detail.as}`, { id: this.selectedHero.id }]);
-    // this._router.navigate([`./${Routes.detail.as}`, { id: this.selectedHero.id }]);
+  }
+
+  onInit() {
+    this.heroes = this.getHeroes();
   }
 
   onSelect(hero: Hero) { this.selectedHero = hero; }

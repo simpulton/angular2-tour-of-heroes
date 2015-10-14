@@ -12,40 +12,41 @@ export class Draggable {
     x:number = 0;
     y:number = 0;
     document = DOM.defaultDoc();
+    mousemove:Function;
+    mousedown:Function;
+    mouseup:Function;
 
     constructor(public element:ElementRef) {
 
     }
 
-    onInit() {
-
+    onInit(): void {
         this.element.nativeElement.style.position = 'relative';
         this.element.nativeElement.style.cursor = 'move';
 
-        var mousemove:Function;
-        var mousedown:Function;
-        var mouseup:Function;
-
-        mousemove = (event:any) => {
+        this.mousemove = (event:any) => {
             this.y = event.screenY - this.startY;
             this.x = event.screenX - this.startX;
             this.element.nativeElement.style.top = this.y + 'px';
             this.element.nativeElement.style.left = this.x + 'px';
         };
 
-        mousedown = (event:any) => {
+        this.mousedown = (event:any) => {
             this.startX = event.screenX - this.x;
             this.startY = event.screenY - this.y;
-            this.document.addEventListener('mousemove', mousemove, false);
-            this.document.addEventListener('mouseup', mouseup, false);
+            this.document.addEventListener('mousemove', this.mousemove, false);
+            this.document.addEventListener('mouseup', this.mouseup, false);
         };
 
-        mouseup = () => {
-            this.document.removeEventListener('mousemove', mousemove);
-            this.document.removeEventListener('mouseup', mouseup);
+        this.mouseup = () => {
+            this.document.removeEventListener('mousemove', this.mousemove);
+            this.document.removeEventListener('mouseup', this.mouseup);
         };
 
-        this.element.nativeElement.addEventListener('mousedown', mousedown, false);
+        this.element.nativeElement.addEventListener('mousedown', this.mousedown, false);
     }
 
+    onDestroy(): void {
+        this.element.nativeElement.removeEventListener('mousedown', this.mousedown);
+    }
 }

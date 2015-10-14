@@ -8,6 +8,7 @@ import {Routes, APP_ROUTES} from './route.config';
     <h1>{{title}}</h1>
     <a [router-link]="routes.dashboard.link" class="router-link">Dashboard</a>
     <a [router-link]="routes.heroes.link" class="router-link">Heroes</a>
+    <a [router-link]="routes.draggable.link" class="router-link">Draggable</a>
     <router-outlet></router-outlet>
   `,
   styles: [`

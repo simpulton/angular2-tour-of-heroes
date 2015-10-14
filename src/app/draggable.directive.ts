@@ -17,10 +17,12 @@ export class Draggable {
     mouseup:Function;
 
     constructor(public element:ElementRef) {
-
+        console.log('HELLO!', this);
     }
 
     onInit(): void {
+
+
         this.element.nativeElement.style.position = 'relative';
         this.element.nativeElement.style.cursor = 'move';
 

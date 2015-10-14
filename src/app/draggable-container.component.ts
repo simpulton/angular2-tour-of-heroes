@@ -3,7 +3,7 @@ import {Draggable} from './draggable.directive';
 
 @Component({
     selector: 'draggable-container',
-    template: `<div draggable></div>`,
+    template: `<div draggable (update)="log($event)"></div>`,
     styles: [`
     [draggable] {
       -webkit-transform: translate3d(0, 0, 0);
@@ -26,4 +26,8 @@ import {Draggable} from './draggable.directive';
 export class DraggableContainerComponent implements OnInit {
     constructor() { }
     onInit() { }
+
+    log(message) {
+        console.log('MESSAGE', message);
+    }
 }

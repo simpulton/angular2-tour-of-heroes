@@ -1,28 +1,28 @@
-import {Component, View, Directive} from 'angular2/angular2';
+import {Component, View, Directive, EventEmitter, Output} from 'angular2/angular2';
 import {DOM} from 'angular2/src/core/dom/dom_adapter';
 import {ElementRef} from 'angular2/core';
 
-
 @Directive({
-    selector: '[draggable]'
+    selector: '[draggable]',
+    output: ['update']
 })
 export class Draggable {
     startX:number = 0;
     startY:number = 0;
     x:number = 0;
     y:number = 0;
+    // @Output() update = new EventEmitter(); // Alternate approach
+    update = new EventEmitter();
     document = DOM.defaultDoc();
     mousemove:Function;
     mousedown:Function;
     mouseup:Function;
 
     constructor(public element:ElementRef) {
-        console.log('HELLO!', this);
+
     }
 
     onInit(): void {
-
-
         this.element.nativeElement.style.position = 'relative';
         this.element.nativeElement.style.cursor = 'move';
 
@@ -43,6 +43,8 @@ export class Draggable {
         this.mouseup = () => {
             this.document.removeEventListener('mousemove', this.mousemove);
             this.document.removeEventListener('mouseup', this.mouseup);
+
+            this.update.next({x: this.x, y: this.y});
         };
 
         this.element.nativeElement.addEventListener('mousedown', this.mousedown, false);
